@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Dominio.Negocio.IoC
 {
-    public static class ServiceContainer
+    public static class DominioServiceCollection
     {
         public static IServiceCollection InjecaoDominio(this IServiceCollection services)
         {

@@ -54,4 +54,17 @@ namespace Dominio.Negocio.Entidades
             DataConclusao = null;
         }
     }
+
+    public static class TarefaConstants
+    {
+        public const string COMENTARIO_ID = "Chave primária (Identificador) de tarefa";
+        public const int TAMANHO_MAXIMO_TITULO = 100;
+        public const string COMENTARIO_TITULO = "Titulo da tarefa";
+        public const int TAMANHO_MAXIMO_DESCRICAO = 250;
+        public const string COMENTARIO_DESCRICAO = "Descrição da Tarefa";
+        public const string COMENTARIO_DATA_CRIACAO = "Data de criação da tarefa";
+        public const string COMENTARIO_DATA_CONCLUSAO = "Data de conclusão da tarefa";
+        public const string COMENTARIO_CONCLUIDA = "Sinaliza se a tarefa está concluida ou não";
+
+    }
 }
