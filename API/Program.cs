@@ -1,3 +1,4 @@
+using API.Middlewares;
 using Aplicacao.Servicos.IoC;
 using Infraestrutura.Dados.SqlServer.Contexto;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 // DI
 builder.Services.InjecaoAplicacao(builder.Configuration);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(opt =>
+{
+    opt.Filters.Add<ResultFilter>();
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(conf =>
 {
@@ -27,12 +32,10 @@ builder.Services.AddSwaggerGen(conf =>
 
 
 
+
 var app = builder.Build();
 
-
-
 // aplica migrações automaticamente
-
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<SqlServerContexto>();

@@ -1,9 +1,11 @@
-﻿namespace Dominio.Negocio.Repositorios
+﻿using Dominio.Negocio.Servicos.Interfaces;
+
+namespace Dominio.Negocio.Repositorios
 {
     public interface IUnitOfWork : IDisposable
     {
-        ITarefaRepositorio Tarefas { get; }
         Task<bool> CommitAsync();
         void Rollback();
+        void BeginTransaction();
     }
 }

@@ -15,7 +15,8 @@ WORKDIR /src
 COPY ["API/API.csproj", "API/"]
 COPY ["Aplicacao.Servicos/Aplicacao.Servicos.csproj", "Aplicacao.Servicos/"]
 COPY ["Dominio.Negocio/Dominio.Negocio.csproj", "Dominio.Negocio/"]
-COPY ["Infraestrutura.Dados.SqlServer/Infraestrutura.Dados.SqlServer.csproj", "Infraestrutura.Dados.SqlServer//"]
+COPY ["Infraestrutura.CrossCutting/Infraestrutura.CrossCutting.csproj", "Infraestrutura.CrossCutting/"]
+COPY ["Infraestrutura.Dados.SqlServer/Infraestrutura.Dados.SqlServer.csproj", "Infraestrutura.Dados.SqlServer/"]
 
 RUN dotnet restore "API/API.csproj"
 COPY . .

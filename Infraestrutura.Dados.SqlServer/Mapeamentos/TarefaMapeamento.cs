@@ -12,29 +12,29 @@ namespace Infraestrutura.Dados.SqlServer.Mapeamentos
 
             builder.HasKey(f => f.Id);
 
-            builder.Property(f => f.Id).HasComment(TarefaConstants.COMENTARIO_ID);
+            builder.Property(f => f.Id).HasComment(TarefaConstants.ComentarioId);
 
             builder.Property(p => p.Titulo)
                    .IsRequired()
-                   .HasMaxLength(TarefaConstants.TAMANHO_MAXIMO_TITULO)
-                   .HasComment(TarefaConstants.COMENTARIO_TITULO);
+                   .HasMaxLength(TarefaConstants.TamanhoMaximoTitulo)
+                   .HasComment(TarefaConstants.ComentarioTitulo);
 
             builder.Property(p => p.Descricao)
                    .IsRequired()
-                   .HasMaxLength(TarefaConstants.TAMANHO_MAXIMO_DESCRICAO)
-                   .HasComment(TarefaConstants.COMENTARIO_DESCRICAO);
+                   .HasMaxLength(TarefaConstants.TamanhoMaximoDescricao)
+                   .HasComment(TarefaConstants.ComentarioDescricao);
 
             builder.Property(p => p.DataCriacao)
                    .IsRequired()
-                   .HasComment(TarefaConstants.COMENTARIO_DATA_CRIACAO);
+                   .HasComment(TarefaConstants.ComentarioDataCriacao);
 
             builder.Property(p => p.DataConclusao)
                    .IsRequired(false)
-                   .HasComment(TarefaConstants.COMENTARIO_DATA_CONCLUSAO);
+                   .HasComment(TarefaConstants.ComentarioDataConclusao);
 
             builder.Property(p => p.Concluida)
                 .IsRequired()
-                .HasComment(TarefaConstants.COMENTARIO_CONCLUIDA);
+                .HasComment(TarefaConstants.ComentarioConcluida);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Infraestrutura.Dados.SqlServer.Repositorios
             return entry.Entity;
         }
 
-        public async Task<T> EditarAsync(T entidade)
+        public async Task<T> AtualizarAsync(T entidade)
         {
             var entry = _dbSet.Update(entidade);
             return await Task.FromResult(entry.Entity);
@@ -37,6 +37,11 @@ namespace Infraestrutura.Dados.SqlServer.Repositorios
         public async Task<IEnumerable<T>> ListarAsync(Expression<Func<T, bool>> expressao)
         {
             return await _dbSet.Where(expressao).ToListAsync();
+        }
+
+        public async Task<bool> ExisteAsync(Expression<Func<T, bool>> expressao)
+        {
+            return await _dbSet.AnyAsync(expressao);
         }
 
         public async Task<T?> RecuperarAsync(Guid id)

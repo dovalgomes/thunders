@@ -11,60 +11,58 @@ namespace Dominio.Negocio.Entidades
         public bool Concluida { get; private set; }
 
         // Construtor vazio para Entity Framework
-        protected Tarefa() { }
+        protected Tarefa() : base() { }
 
         public Tarefa(string titulo, string descricao) : base()
         {
-            DefinirTitulo(titulo);
-            DefinirDescricao(descricao);
+            Titulo = titulo;
+            Descricao = descricao;
             DataCriacao = DateTime.Now;
         }
 
-        public void DefinirTitulo(string titulo)
+        public void Editar(string titulo, string descricao) 
         {
-            if (string.IsNullOrEmpty(titulo))
-                throw new ArgumentException("Informe o titulo da tarefa");
-
             Titulo = titulo;
-        }
-
-        public void DefinirDescricao(string descricao)
-        {
-            if (string.IsNullOrEmpty(descricao))
-                throw new ArgumentException("Informe a descrição da tarefa");
-
             Descricao = descricao;
         }
 
         public void MarcarComoConcluida()
         {
-            if (Concluida)
-                throw new ArgumentException("A tarefa já está concluída");
+            //if (Concluida)
+            //    throw new ArgumentException("A tarefa já está concluída");
 
-            Concluida = true;
-            DataConclusao = DateTime.Now;
+            //Concluida = true;
+            //DataConclusao = DateTime.Now;
         }
 
         public void Reabrir()
         {
-            if (!Concluida)
-                throw new ArgumentException("A tarefa já está aberta");
+            //if (!Concluida)
+            //    throw new ArgumentException("A tarefa já está aberta");
 
-            Concluida = false;
-            DataConclusao = null;
+            //Concluida = false;
+            //DataConclusao = null;
         }
     }
 
     public static class TarefaConstants
     {
-        public const string COMENTARIO_ID = "Chave primária (Identificador) de tarefa";
-        public const int TAMANHO_MAXIMO_TITULO = 100;
-        public const string COMENTARIO_TITULO = "Titulo da tarefa";
-        public const int TAMANHO_MAXIMO_DESCRICAO = 250;
-        public const string COMENTARIO_DESCRICAO = "Descrição da Tarefa";
-        public const string COMENTARIO_DATA_CRIACAO = "Data de criação da tarefa";
-        public const string COMENTARIO_DATA_CONCLUSAO = "Data de conclusão da tarefa";
-        public const string COMENTARIO_CONCLUIDA = "Sinaliza se a tarefa está concluida ou não";
+        public const string ComentarioId = "Chave primária (Identificador) de tarefa";
+        public const string ObrigatorioTitulo = "Informe o titulo";
+        public const int TamanhoMaximoTitulo = 100;
+
+        public const string ComentarioTitulo = "Titulo da tarefa";
+        public static string TamanhoMaximoTituloMensagem = $"A quantidade máxima de caracteres para o titulo é de {TamanhoMaximoTitulo}";
+
+        public const int TamanhoMaximoDescricao = 250;
+        public const string ObrigatorioDescricao = "Informe a descrição";
+        public static string TamanhoMaximoDescricaoMensagem = $"A quantidade máxima de caracteres para a descrição é de {TamanhoMaximoDescricao}";
+
+
+        public const string ComentarioDescricao = "Descrição da Tarefa";
+        public const string ComentarioDataCriacao = "Data de criação da tarefa";
+        public const string ComentarioDataConclusao = "Data de conclusão da tarefa";
+        public const string ComentarioConcluida = "Sinaliza se a tarefa está concluida ou não";
 
     }
 }

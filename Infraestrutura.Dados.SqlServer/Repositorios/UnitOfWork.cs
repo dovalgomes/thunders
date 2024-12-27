@@ -1,4 +1,5 @@
 ﻿using Dominio.Negocio.Repositorios;
+using Dominio.Negocio.Servicos.Interfaces;
 using Infraestrutura.Dados.SqlServer.Contexto;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,17 +8,19 @@ namespace Infraestrutura.Dados.SqlServer.Repositorios
     public class UnitOfWork : IUnitOfWork
     {
         private readonly SqlServerContexto _context;
+        private readonly INotificacaoHandler _notificacaoHandler;
 
-        private ITarefaRepositorio _tarefaRepositorio;
-        public ITarefaRepositorio Tarefas => _tarefaRepositorio ??= new TarefaRepositorio(_context);
-
-        public UnitOfWork(SqlServerContexto contexto)
+        public UnitOfWork(SqlServerContexto contexto, INotificacaoHandler notificacaoHandler)
         {
             _context = contexto;
+            _notificacaoHandler = notificacaoHandler;
         }
 
         public async Task<bool> CommitAsync()
         {
+            if (_notificacaoHandler.PossuiNotificacoes())
+                return false;
+
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -38,6 +41,11 @@ namespace Infraestrutura.Dados.SqlServer.Repositorios
                     _ => entry.State
                 };
             }
+        }
+
+        public void BeginTransaction()
+        {
+
         }
     }
 }

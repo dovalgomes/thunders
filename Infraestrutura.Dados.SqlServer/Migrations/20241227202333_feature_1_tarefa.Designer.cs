@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestrutura.Dados.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerContexto))]
-    [Migration("20241227181436_feature_1_tarefa")]
+    [Migration("20241227202333_feature_1_tarefa")]
     partial class feature_1_tarefa
     {
         /// <inheritdoc />

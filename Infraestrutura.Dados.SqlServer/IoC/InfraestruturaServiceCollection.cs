@@ -18,9 +18,9 @@ namespace Infraestrutura.Dados.SqlServer.IoC
             });
 
             services.AddScoped(typeof(IRepositorio<>), typeof(Repositorio<>));
+
             services.AddScoped<ITarefaRepositorio, TarefaRepositorio>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
 
             return services;
         }
