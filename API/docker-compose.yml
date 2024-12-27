@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:    
+    container_name: sql_server
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "Xy2!b#8z"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - db-data:/var/opt/mssql
+    networks:
+      - thunders-network
+
+  api:    
+    container_name: api
+    build:
+      context: ..
+      dockerfile: API/Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - thunders-network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__SqlServer=Data Source=localhost,1437;MultipleActiveResultSets=True;Min Pool Size=5;Max Pool Size=500; Connect Timeout=60;Initial Catalog=thunders_dev;Persist Security Info=False;User ID=sa;Password=123456;
+
+volumes:
+  db-data:
+
+networks:
+  thunders-network:
+    driver: bridge
