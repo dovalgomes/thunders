@@ -1,5 +1,5 @@
-﻿using Dominio.Negocio.Entidades.Abstracao;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using Dominio.Negocio.Entidades.Abstracoes;
 
 namespace Dominio.Negocio.Repositorios;
 

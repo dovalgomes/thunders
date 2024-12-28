@@ -1,7 +1,7 @@
-﻿using Dominio.Negocio.Entidades.Abstracao;
-using Dominio.Negocio.Repositorios;
+﻿using Dominio.Negocio.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Dominio.Negocio.Entidades.Abstracoes;
 
 namespace Infraestrutura.Dados.SqlServer.Repositorios
 {

@@ -1,4 +1,4 @@
-﻿using Dominio.Negocio.Entidades.Abstracao;
+﻿using Dominio.Negocio.Entidades.Abstracoes;
 
 namespace Dominio.Negocio.Entidades
 {
