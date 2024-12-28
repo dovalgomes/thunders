@@ -4,6 +4,7 @@ using Infraestrutura.Dados.SqlServer.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Infraestrutura.Dados.SqlServer.IoC
 {
@@ -11,6 +12,11 @@ namespace Infraestrutura.Dados.SqlServer.IoC
     {
         public static IServiceCollection InjecaoInfraestrutura(this IServiceCollection services, IConfiguration config)
         {
+            var logger = services.BuildServiceProvider().GetRequiredService<ILogger<SqlServerContexto>>();
+
+            logger.LogInformation("Configurando banco de dados");
+
+
             var connectionString = config.GetConnectionString("SqlServer");
             services.AddDbContext<SqlServerContexto>(opt =>
             {
@@ -19,15 +25,15 @@ namespace Infraestrutura.Dados.SqlServer.IoC
 
             try
             {
-                Console.WriteLine("Iniciando migração automática");
-                var scope = services.BuildServiceProvider().GetRequiredService<SqlServerContexto>();
-                var db = scope.Database;
+                logger.LogInformation("Iniciando migração automática");
+                var scopeDatabase = services.BuildServiceProvider().GetRequiredService<SqlServerContexto>();
+                var db = scopeDatabase.Database;
                 db.Migrate();
-                Console.WriteLine("Migração executada com sucesso");
+                logger.LogInformation("Migração executada com sucesso");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Falha ao executar migração:{ex.Message}");
+                logger.LogError($"Falha ao executar migração:{ex.Message}");
             }
 
             services.AddScoped(typeof(IRepositorio<>), typeof(Repositorio<>));

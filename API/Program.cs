@@ -8,6 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 // DI
 builder.Services.InjecaoAplicacao(builder.Configuration);
 
+// Configura logs
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
 builder.Services.AddControllers(opt =>
 {
     opt.Filters.Add<ResultFilter>();
@@ -33,12 +38,12 @@ builder.Services.AddSwaggerGen(conf =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    app.UseDeveloperExceptionPage();
-}
+//if (app.Environment.IsDevelopment())
+//{
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseDeveloperExceptionPage();
+//}
 
 app.UseHttpsRedirection();
 app.MapControllers();
