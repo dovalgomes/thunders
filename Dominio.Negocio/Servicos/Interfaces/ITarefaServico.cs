@@ -11,7 +11,6 @@ namespace Dominio.Negocio.Servicos.Interfaces
     {
         Task<Tarefa> AdicionarAsync(string titulo, string descricao);
         Task<Tarefa> EditarAsync(Guid id, string titulo, string descricao);
-
         Task<bool> ConcluirAsync(Guid id);
         Task<bool> ReabrirAsync(Guid id);
         Task<bool> ExcluirAsync(Guid id);

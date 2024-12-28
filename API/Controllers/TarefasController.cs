@@ -1,5 +1,6 @@
 ﻿using Aplicacao.Servicos.Abstracoes.Interfaces;
 using Aplicacao.Servicos.DTO.Tarefas;
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -38,58 +39,63 @@ namespace API.Controllers
             return Ok(response);
         }
 
-        ///// <summary>
-        ///// Concluir uma tarefa
-        ///// </summary>
-        ///// <param name="id">Identificador da tarefa</param>
-        ///// <returns></returns>
-        //[HttpPatch("{id}/concluir")]
-        //public async Task<IActionResult> ConcluirAsync(Guid id)
-        //{
-        //    return Ok();
-        //}
+        /// <summary>
+        /// Concluir uma tarefa
+        /// </summary>
+        /// <param name="id">Identificador da tarefa</param>
+        /// <returns></returns>
+        [HttpPatch("{id}/concluir")]
+        public async Task<IActionResult> ConcluirAsync(Guid id)
+        {
+            var response = await _tarefaAppService.ConcluirAsync(id);
+            return Ok(response);
+        }
 
-        ///// <summary>
-        ///// Reabrir uma tarefa
-        ///// </summary>
-        ///// <param name="id">Identificador da tarefa</param>
-        ///// <returns></returns>
-        //[HttpPatch("{id}/reabrir")]
-        //public async Task<IActionResult> ReabrirAsync(Guid id)
-        //{
-        //    return Ok();
-        //}
+        /// <summary>
+        /// Reabrir uma tarefa
+        /// </summary>
+        /// <param name="id">Identificador da tarefa</param>
+        /// <returns></returns>
+        [HttpPatch("{id}/reabrir")]
+        public async Task<IActionResult> ReabrirAsync(Guid id)
+        {
+            var response = await _tarefaAppService.ReabrirAsync(id);
+            return Ok(response);
+        }
 
-        ///// <summary>
-        ///// Recuperar uma tarefa
-        ///// </summary>
-        ///// <param name="id">Identificador da tarefa</param>
-        ///// <returns></returns>
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> RecuperarAsync(Guid id)
-        //{
-        //    return Ok();
-        //}
+        /// <summary>
+        /// Recuperar uma tarefa
+        /// </summary>
+        /// <param name="id">Identificador da tarefa</param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> RecuperarAsync(Guid id)
+        {
+            var response = await _tarefaAppService.RecuperarAsync(id);
+            return Ok(response);
+        }
 
-        ///// <summary>
-        ///// Listar todas as tarefas
-        ///// </summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<IActionResult> ListarAsync()
-        //{
-        //    return Ok();
-        //}
+        /// <summary>
+        /// Listar todas as tarefas
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> ListarAsync()
+        {
+            var response = await _tarefaAppService.ListarAsync();
+            return Ok(response);
+        }
 
-        ///// <summary>
-        ///// Excluir uma tarefa
-        ///// </summary>
-        ///// <param name="id">Identificador da tarefa</param>
-        ///// <returns></returns>
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> ExcluirAsync(Guid id)
-        //{
-        //    return Ok();
-        //}
+        /// <summary>
+        /// Excluir uma tarefa
+        /// </summary>
+        /// <param name="id">Identificador da tarefa</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> ExcluirAsync(Guid id)
+        {
+            var response = await _tarefaAppService.ExcluirAsync(id);
+            return Ok(response);
+        }
     }
 }

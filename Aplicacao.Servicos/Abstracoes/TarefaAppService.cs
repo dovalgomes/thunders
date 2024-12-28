@@ -11,12 +11,14 @@ namespace Aplicacao.Servicos.Abstracoes
         private readonly ITarefaServico _tarefaServico;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ITarefaRepositorio _tarefaRepositorio;
 
-        public TarefaAppService(ITarefaServico tarefaServico, IMapper mapper, IUnitOfWork unitOfWork)
+        public TarefaAppService(ITarefaServico tarefaServico, IMapper mapper, IUnitOfWork unitOfWork, ITarefaRepositorio tarefaRepositorio)
         {
             _tarefaServico = tarefaServico;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _tarefaRepositorio = tarefaRepositorio;
         }
 
         public async Task<TarefaResponse> AdicionarAsync(AdicionarTarefaRequest request)
@@ -30,7 +32,6 @@ namespace Aplicacao.Servicos.Abstracoes
 
             return response;
         }
-
         public async Task<TarefaResponse> EditarAsync(Guid id, EditarTarefaRequest request)
         {
             _unitOfWork.BeginTransaction();
@@ -38,6 +39,40 @@ namespace Aplicacao.Servicos.Abstracoes
             var response = _mapper.Map<TarefaResponse>(tarefa);
             await _unitOfWork.CommitAsync();
             return response;
+        }
+
+        public async Task<bool> ConcluirAsync(Guid id)
+        {
+            _unitOfWork.BeginTransaction();
+            var concluiu = await _tarefaServico.ConcluirAsync(id);
+            await _unitOfWork.CommitAsync();
+            return concluiu;
+        }
+
+        public async Task<bool> ReabrirAsync(Guid id)
+        {
+            _unitOfWork.BeginTransaction();
+            var reabriu = await _tarefaServico.ReabrirAsync(id);
+            await _unitOfWork.CommitAsync();
+            return reabriu;
+        }
+
+        public async Task<bool> ExcluirAsync(Guid id)
+        {
+            _unitOfWork.BeginTransaction();
+            var excluiu = await _tarefaServico.ExcluirAsync(id);
+            await _unitOfWork.CommitAsync();
+            return excluiu;
+        }
+
+        public async Task<TarefaResponse> RecuperarAsync(Guid id)
+        {
+            return _mapper.Map<TarefaResponse>(await _tarefaRepositorio.RecuperarAsync(id));
+        }
+
+        public async Task<IEnumerable<TarefaResponse>> ListarAsync()
+        {
+            return _mapper.Map<IEnumerable<TarefaResponse>>(await _tarefaRepositorio.ListarAsync());
         }
     }
 }

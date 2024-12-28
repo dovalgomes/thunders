@@ -20,7 +20,7 @@ namespace Dominio.Negocio.Entidades
             DataCriacao = DateTime.Now;
         }
 
-        public void Editar(string titulo, string descricao) 
+        public void Editar(string titulo, string descricao)
         {
             Titulo = titulo;
             Descricao = descricao;
@@ -28,20 +28,14 @@ namespace Dominio.Negocio.Entidades
 
         public void MarcarComoConcluida()
         {
-            //if (Concluida)
-            //    throw new ArgumentException("A tarefa já está concluída");
-
-            //Concluida = true;
-            //DataConclusao = DateTime.Now;
+            Concluida = true;
+            DataConclusao = DateTime.Now;
         }
 
         public void Reabrir()
         {
-            //if (!Concluida)
-            //    throw new ArgumentException("A tarefa já está aberta");
-
-            //Concluida = false;
-            //DataConclusao = null;
+            Concluida = false;
+            DataConclusao = null;
         }
     }
 

@@ -17,6 +17,19 @@ namespace Infraestrutura.Dados.SqlServer.IoC
                 opt.UseSqlServer(connectionString);
             });
 
+            try
+            {
+                Console.WriteLine("Iniciando migração automática");
+                var scope = services.BuildServiceProvider().GetRequiredService<SqlServerContexto>();
+                var db = scope.Database;
+                db.Migrate();
+                Console.WriteLine("Migração executada com sucesso");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Falha ao executar migração:{ex.Message}");
+            }
+
             services.AddScoped(typeof(IRepositorio<>), typeof(Repositorio<>));
 
             services.AddScoped<ITarefaRepositorio, TarefaRepositorio>();

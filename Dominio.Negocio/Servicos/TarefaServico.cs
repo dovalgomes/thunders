@@ -26,11 +26,11 @@ namespace Dominio.Negocio.Servicos
             if (!validacao.EstaValido(_notificacaoHandler))
                 return null;
 
-            var existe = await _tarefaRepositorio.ExisteAsync(t => t.Titulo.ToLower() == titulo.ToLower());
+            var existe = await _tarefaRepositorio.ExisteAsync(t => t.Titulo.ToLower() == titulo.ToLower() && !t.Concluida);
 
             if (existe)
             {
-                _notificacaoHandler.Notificar("regra-negocio", "Existe outra tarefa com este titulo");
+                _notificacaoHandler.Notificar("regra-negocio", "Existe outra tarefa não concluída com este titulo");
                 return null;
             }
 
@@ -53,11 +53,11 @@ namespace Dominio.Negocio.Servicos
             if (!validacao.EstaValido(_notificacaoHandler))
                 return null;
 
-            var existe = await _tarefaRepositorio.ExisteAsync(t => t.Titulo.ToLower() == titulo.ToLower() && t.Id != id);
+            var existe = await _tarefaRepositorio.ExisteAsync(t => t.Titulo.ToLower() == titulo.ToLower() && t.Id != id && !t.Concluida);
 
             if (existe)
             {
-                _notificacaoHandler.Notificar("regra-negocio", "Existe outra tarefa com este titulo");
+                _notificacaoHandler.Notificar("regra-negocio", "Existe outra tarefa não concluída com este titulo");
                 return null;
             }
 
@@ -68,19 +68,59 @@ namespace Dominio.Negocio.Servicos
 
         }
 
-        public Task<bool> ConcluirAsync(Guid id)
+        public async Task<bool> ConcluirAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var tarefa = await _tarefaRepositorio.RecuperarAsync(id);
+
+            if (tarefa == null)
+            {
+                _notificacaoHandler.Notificar("regra-negocio", "Tarefa não encontrada");
+                return false;
+            }
+
+            if (tarefa.Concluida)
+            {
+                _notificacaoHandler.Notificar("regra-negocio", "A Tarefa já foi concluída");
+                return false;
+            }
+
+            tarefa.MarcarComoConcluida();
+            await _tarefaRepositorio.AtualizarAsync(tarefa);
+            return true;
         }
 
-        public Task<bool> ExcluirAsync(Guid id)
+        public async Task<bool> ExcluirAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var tarefa = await _tarefaRepositorio.RecuperarAsync(id);
+
+            if (tarefa == null)
+            {
+                _notificacaoHandler.Notificar("regra-negocio", "Tarefa não encontrada");
+                return false;
+            }
+            await _tarefaRepositorio.RemoverAsync(tarefa);
+            return true;
         }
 
-        public Task<bool> ReabrirAsync(Guid id)
+        public async Task<bool> ReabrirAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var tarefa = await _tarefaRepositorio.RecuperarAsync(id);
+
+            if (tarefa == null)
+            {
+                _notificacaoHandler.Notificar("regra-negocio", "Tarefa não encontrada");
+                return false;
+            }
+
+            if (!tarefa.Concluida)
+            {
+                _notificacaoHandler.Notificar("regra-negocio", "A Tarefa já está aberta");
+                return false;
+            }
+
+            tarefa.Reabrir();
+            await _tarefaRepositorio.AtualizarAsync(tarefa);
+            return true;
         }
     }
 }
